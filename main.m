@@ -14,8 +14,8 @@ center_angle = 80;  % The central angle is 80 degrees (angle system)
 p = 0.015;  % period
 lambda = 0.0375;  % wavelength
 phi_scan = '1';  % 如果phi_scan是'1'，代表不扫描，如果想要扫描phi方向，请将phi_scan设置为'180'
-plotOrNot = true;  % 是否画图
-xlsOrNot = true;  % 是否输出xls文件
+plotOrNot = true ;  % 是否画图
+xlsOrNot = false;  % 是否输出xls文件
 xlsName = 'result';
 
 %---------------------------------------------
