@@ -3,7 +3,7 @@
 %       Program initialization
 %---------------------------------------------
 clc;
-clearvars -except RCS;
+clear;
 
 %---------------------------------------------
 %       Set basic parameters
@@ -22,16 +22,10 @@ xlsName = 'result';
 %       Read files
 %---------------------------------------------
 
-% RCS1 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet1', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet1', ['A1:CL', phi_scan])];
-% RCS2 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet2', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet2', ['A1:CL', phi_scan])];
-% RCS3 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet3', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet3', ['A1:CL', phi_scan])];
-% RCS4 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet4', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet4', ['A1:CL', phi_scan])];
-% 
-% RCS(:,:,1)=RCS1;
-% RCS(:,:,2)=RCS2;
-% RCS(:,:,3)=RCS3;
-% RCS(:,:,4)=RCS4;
-
+RCS1 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet1', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet1', ['A1:CL', phi_scan])];
+RCS2 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet2', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet2', ['A1:CL', phi_scan])];
+RCS3 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet3', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet3', ['A1:CL', phi_scan])];
+RCS4 = [xlsread('.\date_source\Rcs.xlsx', 'Sheet4', ['JK1:MW', phi_scan]), xlsread('.\date_source\Rcs.xlsx', 'Sheet4', ['A1:CL', phi_scan])];
 PHI = [14.9604,-75.5002,-154.2015,-242.6656]./180*pi;
 subscript_mat = [1 2 3 2;3 3 1 3;3 3 4 2;2 1 4 2];
 subscript_mat = kron(subscript_mat, ones(num_of_small));
@@ -39,6 +33,12 @@ subscript_mat = kron(subscript_mat, ones(num_of_small));
 %---------------------------------------------
 %       Data preprocessing
 %---------------------------------------------
+% RCS = {RCS1 RCS2 RCS3 RCS4};  % 方向图元胞
+    % this is a good idea
+    RCS(:,:,1)=RCS1;%赋值
+    RCS(:,:,2)=RCS2;
+    RCS(:,:,3)=RCS3;
+    RCS(:,:,4)=RCS4;
 
 side_length = num_of_big * num_of_small;  % 阵列弧长
 center_angle = center_angle / 180 * pi;  % 圆心角
@@ -88,10 +88,6 @@ if plotOrNot == true
 end
 
 if xlsOrNot == true
-    ff = f';
-    file_name = ['\data_result\',xlsName,'.xlsx'];
-    xlswrite(file_name,ff);
-end
 
 % time_now = datestr(now,30);
 % ff = f';
