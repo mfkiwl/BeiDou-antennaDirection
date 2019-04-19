@@ -9,14 +9,14 @@ clearvars -except RCS;
 %       Set basic parameters
 %---------------------------------------------
 num_of_big = 4;  % 4*4 antenna array
-num_of_small = 2; % 2*2 Subarray
+num_of_small = 4; % 2*2 Subarray
 % center_angle = 80;  % The central angle is 80 degrees (angle system)
 p = 0.015;  % period
 lambda = 0.0375;  % wavelength
 phi_scan = '1';  % 如果phi_scan是'1'，代表不扫描，如果想要扫描phi方向，请将phi_scan设置为'180'
 plotOrNot = true ;  % 是否画图
 xlsOrNot = true;  % 是否输出xls文件
-xlsName = 'resultOfPlant';
+xlsName = 'resultOfPlant16_4';
 
 %---------------------------------------------
 %       Read files
@@ -39,7 +39,7 @@ k = 2 * pi / lambda;   % 波向量
 % hn = R * cos((R * center_angle / 2 - p*((1:side_length) - 1/2)) / R) - h0; 
 % p0 = R * sin( center_angle / 2 );  % 半弦长
 pn = p * ((1:side_length) - 1/2);
-m = [1 2 3 4 5 6 7 8]';
+m = linspace(1, side_length, side_length)';
 
 phi_scan = str2double(phi_scan);  % 将原来字符型的phi_scan转换为double型
 
@@ -48,16 +48,20 @@ f = ones(phi_scan,181);
 %---------------------------------------------
 %       计算方向图
 %---------------------------------------------
-% PHI_h = kron(2 * k * hn - pi, ones(8,1));
+
  for phi = 1:phi_scan
     for theta = linspace(-90,90,181)
         Arc_theta = theta/180*pi;
         Arc_phi = (phi-1)/180*pi;
         PHI_p = k * sin(Arc_theta) * ( cos(Arc_phi) * pn + sin(Arc_phi) * p*(m-1/2) );
-        f(phi, theta+91) = sum(sum( reshape( RCS(phi, theta+91, subscript_mat), [8,8] ) .* exp(-1i * ( PHI_p + PHI(subscript_mat) ) ) ) ,2 ); 
+        f(phi, theta+91) = sum(sum( reshape( RCS(phi, theta+91, subscript_mat), [side_length,side_length] ) .* exp(-1i * ( PHI_p + PHI(subscript_mat) ) ) ) ,2 ); 
     end
  end
 f= 20*log10(abs(f));
+
+%---------------------------------------------
+%       画图
+%---------------------------------------------
 
 if plotOrNot == true
     if phi_scan == 1
@@ -77,13 +81,12 @@ if plotOrNot == true
     set(yy,'FontSize',20);
 end
 
+%---------------------------------------------
+%       输出文件
+%---------------------------------------------
+
 if xlsOrNot == true
     ff = f';
     file_name = ['\data_result\',xlsName,'.xlsx'];
     xlswrite(file_name,ff);
 end
-
-% time_now = datestr(now,30);
-% ff = f';
-% file_name = ['\data_result\result_XOZ_',time_now,'.xlsx'];
-% xlswrite(file_name,ff);
