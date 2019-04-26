@@ -9,9 +9,9 @@ clearvars -except RCS;
 %       Set basic parameters
 %---------------------------------------------
 num_of_big = 4;  % 4*4 antenna array
-num_of_small = 2; % 2*2 Subarray
+num_of_small = 4; % 2*2 Subarray
 center_angle = 80;  % The central angle is 80 degrees (angle system)
-p = 0.015;  % period
+p = 0.012;  % period
 lambda = 0.0375;  % wavelength
 phi_scan = '1';  % 如果phi_scan是'1'，代表不扫描，如果想要扫描phi方向，请将phi_scan设置为'180'
 plotOrNot = true ;  % 是否画图
@@ -22,8 +22,8 @@ xlsName = 'result';
 %       Read files
 %---------------------------------------------
 
-PHI = [14.9604,-75.5002,-154.2015,-242.6656]./180*pi;
-subscript_mat = [1 2 3 2;3 3 1 3;3 3 4 2;2 1 4 2];
+PHI = [113.2190,-57.5361,24.4206,-153.7119]./180*pi;
+subscript_mat = [2,4,1,2;2,4,3,3;3,1,3,3;2,3,2,1];
 subscript_mat = kron(subscript_mat, ones(num_of_small));
 
 %---------------------------------------------
