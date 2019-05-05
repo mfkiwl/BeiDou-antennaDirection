@@ -12,7 +12,8 @@ num_of_big = 4;  % 4*4 antenna array
 num_of_small = 4; % 2*2 Subarray
 center_angle = 80;  % The central angle is 80 degrees (angle system)
 p = 0.012;  % period
-lambda = 0.0375;  % wavelength
+% lambda = 0.0375;  % wavelength
+lambda = 0.03;
 phi_scan = '1';  % 如果phi_scan是'1'，代表不扫描，如果想要扫描phi方向，请将phi_scan设置为'180'
 plotOrNot = true ;  % 是否画图
 xlsOrNot = false;  % 是否输出xls文件
@@ -22,8 +23,9 @@ xlsName = 'result';
 %       Read files
 %---------------------------------------------
 
-PHI = [113.2190,-57.5361,24.4206,-153.7119]./180*pi;
-subscript_mat = [2,4,1,2;2,4,3,3;3,1,3,3;2,3,2,1];
+% PHI = [113.2190,-57.5361,24.4206,-153.7119]./180*pi;
+PHI = [90.3073, -61.5098, -123.967, -156.333]./180*pi;
+subscript_mat = [4,3,1,3;2,1,3,4;2,2,1,2;3,4,3,4];
 subscript_mat = kron(subscript_mat, ones(num_of_small));
 
 %---------------------------------------------
